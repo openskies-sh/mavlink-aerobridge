@@ -77,7 +77,7 @@ namespace Aerobridge
             //     return;
             // }
             string angle = "0";
-            InputQuery("Aerobridge Management Server", "Choose a interaction with GCS", ref angle);
+            InputQuery("Aerobridge Management Server", "Paste your Aerobridge JWT Token", ref angle);
             int angle_in_number = Int32.Parse(angle);
 
             Host.InsertWP(0, MAVLink.MAV_CMD.DO_SET_SERVO, 9, angle_in_number, 0, 0, 0, 0, 0);
@@ -119,14 +119,21 @@ namespace Aerobridge
             lblPrompt.Top = MulDiv(8, (int)dialogUnits.Height, 8);
             lblPrompt.Text = prompt;
 
-            System.Windows.Forms.TextBox edInput;
-            edInput = new System.Windows.Forms.TextBox();
-            edInput.Parent = form;
-            edInput.Left = lblPrompt.Left;
-            edInput.Top = MulDiv(19, (int)dialogUnits.Height, 8);
-            edInput.Width = MulDiv(164, (int)dialogUnits.Width, 4);
-            edInput.Text = value;
-            edInput.SelectAll();
+            System.Windows.Forms.Label statusLabel;
+            statusLabel = new System.Windows.Forms.Label();
+            statusLabel.Parent = form;
+            statusLabel.Left = lblPrompt.Left;
+            statusLabel.Top = MulDiv(19, (int)dialogUnits.Height, 8);
+            statusLabel.Width = MulDiv(164, (int)dialogUnits.Width, 4);
+
+            System.Windows.Forms.TextBox jwtInput;
+            jwtInput = new System.Windows.Forms.TextBox();
+            jwtInput.Parent = form;
+            jwtInput.Left = lblPrompt.Left;
+            jwtInput.Top = MulDiv(29, (int)dialogUnits.Height, 8);
+            jwtInput.Width = MulDiv(164, (int)dialogUnits.Width, 4);
+            jwtInput.Text = value;
+            jwtInput.SelectAll();
 
             int buttonTop = MulDiv(41, (int)dialogUnits.Height, 8);
             //Command buttons should be 50x14 dlus
