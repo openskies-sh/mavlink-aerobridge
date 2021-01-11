@@ -10,7 +10,8 @@ For the moment please follow the following steps:
 
 1. Ensure that you have Mission Planner Installed on your PC.
 2. Please copy the `Aerobridge_Plugin.cs` file into the `C:\Program Files (x86)\Mission Planner\plugins` directory.
-3. Open Mission Planner and click `Ctrl + A` to launch the plugin.
+3. Open Mission Planner and go to the `Plan` section. 
+4. Right-click on the map and you will see a Aerobridge menu, click to launch it
 
 ## Development
 
