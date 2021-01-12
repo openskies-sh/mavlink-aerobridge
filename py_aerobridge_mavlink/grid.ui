@@ -1,0 +1,224 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.0">
+  <object class="ttk.Frame" id="mainwindow">
+    <property name="height">250</property>
+    <property name="padding">10</property>
+    <property name="text" translatable="yes">Aerobridge RFM Connector</property>
+    <property name="width">250</property>
+    <layout manager="grid">
+      <property name="column">0</property>
+      <property name="row">0</property>
+      <property id="0" name="pad" type="col">10</property>
+      <property id="1" name="pad" type="col">10</property>
+      <property id="0" name="pad" type="row">0</property>
+      <property id="2" name="pad" type="row">10</property>
+      <property id="5" name="pad" type="row">10</property>
+      <property id="7" name="pad" type="row">10</property>
+    </layout>
+    <child>
+      <object class="ttk.Label" id="rfm_command_label">
+        <property name="font">TkHeadingFont</property>
+        <property name="text" translatable="yes">RFM Commands</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">3</property>
+          <property id="0" name="pad" type="col">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Text" id="application_logs_msg">
+        <property name="height">15</property>
+        <property name="text" translatable="yes">Application Logs</property>
+        <property name="width">70</property>
+        <layout manager="grid">
+          <property name="padx">10</property>
+          <property name="pady">10</property>
+          <property name="propagate">True</property>
+          <property name="row">10</property>
+          <property name="sticky">w</property>
+          <property id="0" name="pad" type="col">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Text" id="jwt_text">
+        <property name="height">15</property>
+        <property name="text" translatable="yes">Add your Aerobridge JWT Token here</property>
+        <property name="width">20</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Label" id="aerobridge_lbl">
+        <property name="font">TkHeadingFont</property>
+        <property name="text" translatable="yes">Aerobridge Commands
+</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">3</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="get_drone_id_tn">
+        <property name="command">get_drone_id_clicked</property>
+        <property name="text" translatable="yes">Get Drone ID</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">4</property>
+          <property id="0" name="pad" type="col">10</property>
+          <property id="4" name="pad" type="row">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="drone_id_pk_btn">
+        <property name="command">drone_id_reg_post_btn_clicked</property>
+        <property name="text" translatable="yes">Post Drone ID and Public Key for Registration	</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">4</property>
+          <property id="4" name="pad" type="row">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="generate_keys_btn">
+        <property name="command">generate_keys_btn_clicked</property>
+        <property name="text" translatable="yes">Generate Keys</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">5</property>
+          <property id="0" name="pad" type="col">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="get_signed_public_key_btn">
+        <property name="text" translatable="yes">Get Signed Public Key</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">5</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="button_19">
+        <property name="command">send_permission_button_clicked</property>
+        <property name="text" translatable="yes">Send Permission</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">6</property>
+          <property id="0" name="pad" type="col">10</property>
+          <property id="6" name="pad" type="row">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="download_permission_artefact">
+        <property name="command">download_permission_artefact_clicked</property>
+        <property name="text" translatable="yes">Download Permission Artefact</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">6</property>
+          <property id="6" name="pad" type="row">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="get_signed_log_btn">
+        <property name="command">get_signed_log_btn_clicked</property>
+        <property name="text" translatable="yes">Get Signed Log</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">7</property>
+          <property id="0" name="pad" type="col">10</property>
+          <property id="7" name="pad" type="row">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="upload_signed_log_btn">
+        <property name="command">upload_signed_log_clicked</property>
+        <property name="text" translatable="yes">Upload Signed Log</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">7</property>
+          <property id="7" name="pad" type="row">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Combobox" id="combobox_2">
+        <layout manager="grid">
+          <property name="propagate">True</property>
+          <property name="row">11</property>
+          <property id="0" name="pad" type="col">10</property>
+          <property id="11" name="pad" type="row">10</property>
+          <property id="11" name="weight" type="row">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Combobox" id="combobox_3">
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="padx">10</property>
+          <property name="pady">10</property>
+          <property name="propagate">True</property>
+          <property name="row">11</property>
+          <property name="sticky">w</property>
+          <property id="0" name="pad" type="col">10</property>
+          <property id="11" name="pad" type="row">10</property>
+          <property id="11" name="weight" type="row">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Message" id="conn_status_lbl">
+        <property name="justify">left</property>
+        <property name="padx">10</property>
+        <property name="pady">10</property>
+        <property name="relief">flat</property>
+        <property name="takefocus">false</property>
+        <property name="text" translatable="yes">Press Connect to connect to the drone! </property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">11</property>
+          <property name="sticky">w</property>
+          <property id="11" name="pad" type="row">10</property>
+          <property id="11" name="weight" type="row">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="connect_drone_btn">
+        <property name="command">connect_drone_btn_clicked</property>
+        <property name="text" translatable="yes">Connect to Drone!</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">11</property>
+          <property name="sticky">e</property>
+          <property id="0" name="pad" type="col">10</property>
+        </layout>
+      </object>
+    </child>
+  </object>
+</interface>

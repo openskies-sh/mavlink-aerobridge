@@ -1,0 +1,4 @@
+pygubu
+requests
+pyjwt
+mavproxy
