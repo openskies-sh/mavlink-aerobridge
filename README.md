@@ -1,6 +1,6 @@
-# Mavlink Connectivity for Aerobridge Management Server
+# MAVlink Connectivity for Aerobridge Management Server
 
-This repository enables you to connect Mission Planner Ground Control Station (GCS) and thereby the Registered Flight Module (RFM) to the Aerobridge Management server. This repository proposes two ways to communicate with the RFM using MissionPlanner:
+This repository enables you to connect to a drone and thereby the Registered Flight Module (RFM) to the Aerobridge Management server. This repository proposes two ways to communicate with the RFM:
 
 - As a __MissionPlanner Plugin__
 - As a __Standalone Client__ using the MAVLink Protocol
