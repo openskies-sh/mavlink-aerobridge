@@ -44,9 +44,5 @@ The plugin is in the `MissionPLanner.Aerobridge.sln` file in Visual Studio Commu
 
 The Aerobridge Client Solution extends the [SimpleExample](https://ardupilot.org/dev/docs/building-mission-planner.html#building-the-simpleexample) solution as a part of the MissionPlanner code base. You will need Visual Studio Community Edition, which is available for free. To debug this, do the following:
 
-1. Download the Mission Planner [source code](https://github.com/ArduPilot/MissionPlanner/releases/tag/)
-2. Unzip the file on for e.g. Desktop
-3. Copy the `Aerobridge-FullClient` folder in the `ExtLibs` folder
-4. Open the `AerobridgeClient.sln` in Visual Studio
-5. You should be able the solution in Visual Studio and edit it. 
-6. Make your changes and then send the pull requests to the original code.
+1. Download the repository, open the `AerobridgeClient.sln` file Visual Studio
+2. To check the Mavlink dependency, you can click on `Build -> Rebuild Solution` in Visual Studio
