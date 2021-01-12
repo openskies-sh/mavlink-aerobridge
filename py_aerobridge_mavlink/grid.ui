@@ -3,7 +3,7 @@
   <object class="ttk.Frame" id="mainwindow">
     <property name="height">250</property>
     <property name="padding">10</property>
-    <property name="text" translatable="yes">Aerobridge RFM Connector</property>
+    
     <property name="width">250</property>
     <layout manager="grid">
       <property name="column">0</property>
@@ -30,10 +30,10 @@
     <child>
       <object class="tk.Text" id="application_logs_msg">
         <property name="height">15</property>
+        <property name="insertwidth">0</property>
         <property name="text" translatable="yes">Application Logs</property>
-        <property name="width">70</property>
+        <property name="width">50</property>
         <layout manager="grid">
-          <property name="padx">10</property>
           <property name="pady">10</property>
           <property name="propagate">True</property>
           <property name="row">10</property>
@@ -46,11 +46,14 @@
       <object class="tk.Text" id="jwt_text">
         <property name="height">15</property>
         <property name="text" translatable="yes">Add your Aerobridge JWT Token here</property>
-        <property name="width">20</property>
+        <property name="width">40</property>
         <layout manager="grid">
           <property name="column">1</property>
+          <property name="pady">10</property>
           <property name="propagate">True</property>
           <property name="row">10</property>
+          <property name="sticky">e</property>
+          <property id="1" name="pad" type="col">10</property>
         </layout>
       </object>
     </child>
@@ -63,6 +66,7 @@
           <property name="column">1</property>
           <property name="propagate">True</property>
           <property name="row">3</property>
+          <property id="1" name="pad" type="col">10</property>
         </layout>
       </object>
     </child>
@@ -74,6 +78,7 @@
           <property name="column">0</property>
           <property name="propagate">True</property>
           <property name="row">4</property>
+          <property name="sticky">w</property>
           <property id="0" name="pad" type="col">10</property>
           <property id="4" name="pad" type="row">10</property>
         </layout>
@@ -87,6 +92,8 @@
           <property name="column">1</property>
           <property name="propagate">True</property>
           <property name="row">4</property>
+          <property name="sticky">e</property>
+          <property id="1" name="pad" type="col">10</property>
           <property id="4" name="pad" type="row">10</property>
         </layout>
       </object>
@@ -99,6 +106,7 @@
           <property name="column">0</property>
           <property name="propagate">True</property>
           <property name="row">5</property>
+          <property name="sticky">w</property>
           <property id="0" name="pad" type="col">10</property>
         </layout>
       </object>
@@ -110,6 +118,8 @@
           <property name="column">1</property>
           <property name="propagate">True</property>
           <property name="row">5</property>
+          <property name="sticky">e</property>
+          <property id="1" name="pad" type="col">10</property>
         </layout>
       </object>
     </child>
@@ -121,6 +131,7 @@
           <property name="column">0</property>
           <property name="propagate">True</property>
           <property name="row">6</property>
+          <property name="sticky">w</property>
           <property id="0" name="pad" type="col">10</property>
           <property id="6" name="pad" type="row">10</property>
         </layout>
@@ -134,6 +145,8 @@
           <property name="column">1</property>
           <property name="propagate">True</property>
           <property name="row">6</property>
+          <property name="sticky">e</property>
+          <property id="1" name="pad" type="col">10</property>
           <property id="6" name="pad" type="row">10</property>
         </layout>
       </object>
@@ -146,6 +159,7 @@
           <property name="column">0</property>
           <property name="propagate">True</property>
           <property name="row">7</property>
+          <property name="sticky">w</property>
           <property id="0" name="pad" type="col">10</property>
           <property id="7" name="pad" type="row">10</property>
         </layout>
@@ -159,29 +173,21 @@
           <property name="column">1</property>
           <property name="propagate">True</property>
           <property name="row">7</property>
+          <property name="sticky">e</property>
+          <property id="1" name="pad" type="col">10</property>
           <property id="7" name="pad" type="row">10</property>
         </layout>
       </object>
     </child>
     <child>
-      <object class="ttk.Combobox" id="combobox_2">
-        <layout manager="grid">
-          <property name="propagate">True</property>
-          <property name="row">11</property>
-          <property id="0" name="pad" type="col">10</property>
-          <property id="11" name="pad" type="row">10</property>
-          <property id="11" name="weight" type="row">0</property>
-        </layout>
-      </object>
-    </child>
-    <child>
-      <object class="ttk.Combobox" id="combobox_3">
+      <object class="pygubu.builder.widgets.combobox" id="connection_string">
+        <property name="width">45</property>
         <layout manager="grid">
           <property name="column">0</property>
           <property name="padx">10</property>
           <property name="pady">10</property>
           <property name="propagate">True</property>
-          <property name="row">11</property>
+          <property name="row">12</property>
           <property name="sticky">w</property>
           <property id="0" name="pad" type="col">10</property>
           <property id="11" name="pad" type="row">10</property>
@@ -200,8 +206,9 @@
         <layout manager="grid">
           <property name="column">1</property>
           <property name="propagate">True</property>
-          <property name="row">11</property>
-          <property name="sticky">w</property>
+          <property name="row">12</property>
+          <property name="sticky">e</property>
+          <property id="1" name="pad" type="col">10</property>
           <property id="11" name="pad" type="row">10</property>
           <property id="11" name="weight" type="row">0</property>
         </layout>
@@ -214,7 +221,7 @@
         <layout manager="grid">
           <property name="column">0</property>
           <property name="propagate">True</property>
-          <property name="row">11</property>
+          <property name="row">12</property>
           <property name="sticky">e</property>
           <property id="0" name="pad" type="col">10</property>
         </layout>
