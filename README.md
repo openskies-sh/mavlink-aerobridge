@@ -26,11 +26,11 @@ For the moment please follow the following steps:
 
 ### Aerobridge Client
 
-![client](https://imgur.com/zHPXFcx)
+![client](https://i.imgur.com/zHPXFcx.png)
 
 ### Aerobridge Plugin
 
-![plugin](https://imgur.com/IkSyxtl)
+![plugin](https://i.imgur.com/IkSyxtl.png)
 
 ## Development
 
