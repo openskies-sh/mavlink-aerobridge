@@ -1,4 +1,4 @@
-# Mission Planner Connectivity for Aerobridge Management Server
+# Mavlink Connectivity for Aerobridge Management Server
 
 This repository enables you to connect Mission Planner Ground Control Station (GCS) and thereby the Registered Flight Module (RFM) to the Aerobridge Management server. This repository proposes two ways to communicate with the RFM using MissionPlanner:
 
