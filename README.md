@@ -2,21 +2,21 @@
 
 This repository enables you to connect to a drone and thereby the Registered Flight Module (RFM) to the Aerobridge Management server. This repository proposes two ways to communicate with the RFM:
 
-- As a __MissionPlanner Plugin__
-- As a __Standalone Client__ using the MAVLink Protocol
+- As a __Windows Client__ for installation in Windows Systems
+- As a __Standalone Client__  for cross use in Windows, OSX or Linux platforms
+
+Both these solutions use the MAVLink Protocol
 
 __January 2021__ : This repository is under heavy development, and not for production use, this is why we are testing two ways of connectivity. The installation instructions and user interface **will** change. Manufacturers / Operators: if you want to test / integrate this, join our "Canary program" by registering for our [webinar series](http://webinar.aerobridge.in).
 
 ## Installation
 
-### Installing the Plugin
+### Python Based Client
 
-For the moment please follow the following steps:
-
-1. Ensure that you have Mission Planner Installed on your PC.
-2. Please copy the `Aerobridge_Plugin.cs` file into the `C:\Program Files (x86)\Mission Planner\plugins` directory.
-3. Open Mission Planner and go to the `Plan` section
-4. Right-click on the map and you will see a Aerobridge menu, click to launch it
+1. Download and unzip the repository 
+2. Go to the `py_aerobridge_mavlink` folder
+3. Install the dependencies by using pip e.g. `pip install -r requirements.txt`
+4. Launch the user interface `python aerobridge_connector.py`
 
 ### Run the Client
 
@@ -24,21 +24,21 @@ For the moment please follow the following steps:
 
 ## Screenshots
 
-### Aerobridge Client
+### Windows Based Client
 
 ![client](https://i.imgur.com/zHPXFcx.png)
 
-### Aerobridge Plugin
+### Python Based Client
 
-![plugin](https://i.imgur.com/IkSyxtl.png)
+![plugin](https://i.imgur.com/r4vNgdm.jpg)
 
 ## Development
 
 For technical developer only: You can choose to develop either the Plugin or Client. It is recommended that you have Mission Planner installed and the latest copy of the source downloaded per the instructions [here](https://ardupilot.org/dev/docs/building-mission-planner.html#getting-the-mission-planner-source-code-from-github-into-your-computer)
 
-### Plugin only
+### Python Client
 
-The plugin is in the `MissionPLanner.Aerobridge.sln` file in Visual Studio Community Edition for free. If you want to access the Mission Planner Namespace, download the latest solution from [MissionPlanner Releases](https://github.com/ArduPilot/MissionPlanner/releases/) page, open it in Visual Studio Community Edition. Then you can add this solution to your project by following [Microsoft help directions](https://docs.microsoft.com/en-us/sql/ssms/solution/add-an-existing-project-to-a-solution?view=sql-server-ver15)
+This client uses the [pygubu](https://github.com/alejandroautalan/pygubu) library to develop the user interface, you can use the grid.ui file to see the interface. The main code that interacts with MavLink is in the `aerobridge_connector.py` module. 
 
 ### Aerobridge Full Client
 
