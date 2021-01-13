@@ -3,22 +3,24 @@
 This repository enables you to connect to a drone and thereby the Registered Flight Module (RFM) to the Aerobridge Management server. This repository proposes two ways to communicate with the RFM:
 
 - As a __Windows Client__ for installation in Windows Systems
-- As a __Standalone Client__  for cross use in Windows, OSX or Linux platforms
+- As a __Cross-platform Client__ for use in Windows, OSX or Linux platforms
 
-Both these solutions use the MAVLink Protocol
+both these solutions use the MAVLink Protocol as a the library to interact with RFM.
 
-__January 2021__ : This repository is under heavy development, and not for production use, this is why we are testing two ways of connectivity. The installation instructions and user interface **will** change. Manufacturers / Operators: if you want to test / integrate this, join our "Canary program" by registering for our [webinar series](http://webinar.aerobridge.in).
+__January 2021__ : This repository is under heavy development, and not for production use, this is why we are testing two ways of connectivity. The installation instructions and user interface **will** change. 
+
+Manufacturers / Operators: if you want to test / integrate this, join our "Canary program" by registering for our [webinar series](http://webinar.aerobridge.in).
 
 ## Installation
 
-### Python Based Client
+### Cross Platform Client
 
-1. Download and unzip the repository 
+1. Download and unzip the repository
 2. Go to the `py_aerobridge_mavlink` folder
 3. Install the dependencies by using pip e.g. `pip install -r requirements.txt`
 4. Launch the user interface `python aerobridge_connector.py`
 
-### Run the Client
+### Windows Client
 
 1. Go to the releases page and download the latest release
 
