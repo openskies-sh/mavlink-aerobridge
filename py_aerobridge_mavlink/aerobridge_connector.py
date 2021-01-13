@@ -2,6 +2,8 @@ import os
 import pygubu
 from pymavlink import mavutil
 import threading
+import requests, json
+
 
 PROJECT_PATH = os.path.dirname(__file__)
 PROJECT_UI = os.path.join(PROJECT_PATH, "grid.ui")
@@ -13,6 +15,31 @@ mavlink_thread_should_exit = False
 def progress(string):
     print(string, file=sys.stdout)
     sys.stdout.flush()
+
+
+class AerobridgeClient():
+    '''
+    This a a Python client that uses the Aerobridge API to make calls
+    and return data. It requires the requests package and the json module. 
+    '''
+
+    def __init__(self, url, token):
+        '''
+        Declare your project id, token and the url (optional). 
+        '''
+
+        self.token = token
+        self.securl = url if url else 'https://aerobridgetestflight.herokuapp.com/'
+
+
+    def ping_server(self):
+        ''' This method Pings the Aerobridge Server for a response  '''
+        securl = self.securl+ 'ping'
+        headers = {'Authorization': 'Bearer '+ self.token}
+        r = requests.get(securl, headers=headers)
+        return r
+
+
 
 
 def mavlink_loop(conn, callbacks):
@@ -75,6 +102,26 @@ class AerobridgeRFMApp:
 
     def upload_signed_log_clicked(self):
         pass
+
+    def on_connect_aerobridge_clicked(self):
+        jwt_tb = self.builder.get_object('jwt_text')
+        
+        ab_conn_lbl = self.builder.get_variable('ab_conn_status_lbl')
+        
+        jwt = jwt_tb.get()
+        if (jwt=='Paste Aerobridge JWT Token'):          
+            ab_conn_lbl.set('Invalid Token, contact your administrator')
+        else:
+            myAerobridgeClient = AerobridgeClient(url='https://aerobridgetestflight.herokuapp.com/', token=jwt)
+            r = myAerobridgeClient.ping_server()
+            if r.status_code == 200:                
+                ab_conn_lbl.set('Connected and Verified Token!')
+            else:
+                ab_conn_lbl.set('Invalid Token, contact your administrator')
+
+
+
+
 
     def connect_drone_btn_clicked(self):
         # Source: https://github.com/thien94/vision_to_mavros/blob/master/scripts/t265_to_mavlink.py 

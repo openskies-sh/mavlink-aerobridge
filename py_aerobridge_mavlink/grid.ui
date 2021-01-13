@@ -1,72 +1,50 @@
 <?xml version='1.0' encoding='utf-8'?>
 <interface version="1.0">
   <object class="ttk.Frame" id="mainwindow">
-    <property name="height">250</property>
+    <property name="height">800</property>
     <property name="padding">10</property>
-    
-    <property name="width">250</property>
+    <property name="width">600</property>
     <layout manager="grid">
-      <property name="column">0</property>
-      <property name="row">0</property>
-      <property id="0" name="pad" type="col">10</property>
-      <property id="1" name="pad" type="col">10</property>
-      <property id="0" name="pad" type="row">0</property>
-      <property id="2" name="pad" type="row">10</property>
-      <property id="5" name="pad" type="row">10</property>
-      <property id="7" name="pad" type="row">10</property>
+      <property name="propagate">True</property>
     </layout>
     <child>
       <object class="ttk.Label" id="rfm_command_label">
         <property name="font">TkHeadingFont</property>
         <property name="text" translatable="yes">RFM Commands</property>
         <layout manager="grid">
-          <property name="column">0</property>
           <property name="propagate">True</property>
           <property name="row">3</property>
-          <property id="0" name="pad" type="col">10</property>
-        </layout>
-      </object>
-    </child>
-    <child>
-      <object class="tk.Text" id="application_logs_msg">
-        <property name="height">15</property>
-        <property name="insertwidth">0</property>
-        <property name="text" translatable="yes">Application Logs</property>
-        <property name="width">50</property>
-        <layout manager="grid">
-          <property name="pady">10</property>
-          <property name="propagate">True</property>
-          <property name="row">10</property>
           <property name="sticky">w</property>
-          <property id="0" name="pad" type="col">10</property>
+          <property id="0" name="pad" type="col">0</property>
         </layout>
       </object>
     </child>
     <child>
-      <object class="tk.Text" id="jwt_text">
-        <property name="height">15</property>
-        <property name="text" translatable="yes">Add your Aerobridge JWT Token here</property>
+      <object class="tk.Entry" id="jwt_text">
+        <property name="text" translatable="yes">Paste Aerobridge JWT Token</property>
         <property name="width">40</property>
         <layout manager="grid">
-          <property name="column">1</property>
-          <property name="pady">10</property>
+          <property name="column">0</property>
           <property name="propagate">True</property>
-          <property name="row">10</property>
-          <property name="sticky">e</property>
-          <property id="1" name="pad" type="col">10</property>
+          <property name="row">1</property>
+          <property name="sticky">w</property>
+          <property id="1" name="pad" type="col">0</property>
+          <property id="1" name="pad" type="row">10</property>
+          <property id="4" name="pad" type="row">10</property>
         </layout>
       </object>
     </child>
     <child>
       <object class="ttk.Label" id="aerobridge_lbl">
-        <property name="font">TkHeadingFont</property>
+        <property name="justify">center</property>
         <property name="text" translatable="yes">Aerobridge Commands
 </property>
         <layout manager="grid">
           <property name="column">1</property>
           <property name="propagate">True</property>
           <property name="row">3</property>
-          <property id="1" name="pad" type="col">10</property>
+          <property name="sticky">e</property>
+          <property id="1" name="pad" type="col">0</property>
         </layout>
       </object>
     </child>
@@ -79,7 +57,7 @@
           <property name="propagate">True</property>
           <property name="row">4</property>
           <property name="sticky">w</property>
-          <property id="0" name="pad" type="col">10</property>
+          <property id="0" name="pad" type="col">0</property>
           <property id="4" name="pad" type="row">10</property>
         </layout>
       </object>
@@ -91,9 +69,9 @@
         <layout manager="grid">
           <property name="column">1</property>
           <property name="propagate">True</property>
-          <property name="row">4</property>
+          <property name="row">5</property>
           <property name="sticky">e</property>
-          <property id="1" name="pad" type="col">10</property>
+          <property id="1" name="pad" type="col">0</property>
           <property id="4" name="pad" type="row">10</property>
         </layout>
       </object>
@@ -107,7 +85,7 @@
           <property name="propagate">True</property>
           <property name="row">5</property>
           <property name="sticky">w</property>
-          <property id="0" name="pad" type="col">10</property>
+          <property id="0" name="pad" type="col">0</property>
         </layout>
       </object>
     </child>
@@ -117,14 +95,14 @@
         <layout manager="grid">
           <property name="column">1</property>
           <property name="propagate">True</property>
-          <property name="row">5</property>
+          <property name="row">6</property>
           <property name="sticky">e</property>
-          <property id="1" name="pad" type="col">10</property>
+          <property id="1" name="pad" type="col">0</property>
         </layout>
       </object>
     </child>
     <child>
-      <object class="ttk.Button" id="button_19">
+      <object class="ttk.Button" id="sendPermissionBtn">
         <property name="command">send_permission_button_clicked</property>
         <property name="text" translatable="yes">Send Permission</property>
         <layout manager="grid">
@@ -132,7 +110,7 @@
           <property name="propagate">True</property>
           <property name="row">6</property>
           <property name="sticky">w</property>
-          <property id="0" name="pad" type="col">10</property>
+          <property id="0" name="pad" type="col">0</property>
           <property id="6" name="pad" type="row">10</property>
         </layout>
       </object>
@@ -144,9 +122,9 @@
         <layout manager="grid">
           <property name="column">1</property>
           <property name="propagate">True</property>
-          <property name="row">6</property>
+          <property name="row">7</property>
           <property name="sticky">e</property>
-          <property id="1" name="pad" type="col">10</property>
+          <property id="1" name="pad" type="col">0</property>
           <property id="6" name="pad" type="row">10</property>
         </layout>
       </object>
@@ -160,7 +138,7 @@
           <property name="propagate">True</property>
           <property name="row">7</property>
           <property name="sticky">w</property>
-          <property id="0" name="pad" type="col">10</property>
+          <property id="0" name="pad" type="col">0</property>
           <property id="7" name="pad" type="row">10</property>
         </layout>
       </object>
@@ -172,9 +150,9 @@
         <layout manager="grid">
           <property name="column">1</property>
           <property name="propagate">True</property>
-          <property name="row">7</property>
+          <property name="row">8</property>
           <property name="sticky">e</property>
-          <property id="1" name="pad" type="col">10</property>
+          <property id="1" name="pad" type="col">0</property>
           <property id="7" name="pad" type="row">10</property>
         </layout>
       </object>
@@ -184,31 +162,10 @@
         <property name="width">45</property>
         <layout manager="grid">
           <property name="column">0</property>
-          <property name="padx">10</property>
-          <property name="pady">10</property>
           <property name="propagate">True</property>
-          <property name="row">12</property>
+          <property name="row">2</property>
           <property name="sticky">w</property>
-          <property id="0" name="pad" type="col">10</property>
-          <property id="11" name="pad" type="row">10</property>
-          <property id="11" name="weight" type="row">0</property>
-        </layout>
-      </object>
-    </child>
-    <child>
-      <object class="tk.Message" id="conn_status_lbl">
-        <property name="justify">left</property>
-        <property name="padx">10</property>
-        <property name="pady">10</property>
-        <property name="relief">flat</property>
-        <property name="takefocus">false</property>
-        <property name="text" translatable="yes">Press Connect to connect to the drone! </property>
-        <layout manager="grid">
-          <property name="column">1</property>
-          <property name="propagate">True</property>
-          <property name="row">12</property>
-          <property name="sticky">e</property>
-          <property id="1" name="pad" type="col">10</property>
+          <property id="0" name="pad" type="col">0</property>
           <property id="11" name="pad" type="row">10</property>
           <property id="11" name="weight" type="row">0</property>
         </layout>
@@ -221,9 +178,102 @@
         <layout manager="grid">
           <property name="column">0</property>
           <property name="propagate">True</property>
-          <property name="row">12</property>
+          <property name="row">2</property>
           <property name="sticky">e</property>
-          <property id="0" name="pad" type="col">10</property>
+          <property id="0" name="pad" type="col">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Labelframe" id="connection_status_lbl">
+        <property name="text" translatable="yes">Drone Connection Status</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">13</property>
+          <property name="sticky">e</property>
+          <property id="1" name="pad" type="col">0</property>
+        </layout>
+        <child>
+          <object class="tk.Label" id="conn_status_lbl">
+            <property name="text" translatable="yes">Not Connected!</property>
+            <layout manager="pack">
+              <property name="propagate">True</property>
+              <property name="side">top</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Labelframe" id="ab_connection_status_lbl">
+        <property name="text" translatable="yes">Aerobridge Connection Status</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">13</property>
+          <property name="sticky">se</property>
+          <property id="1" name="pad" type="col">0</property>
+        </layout>
+        <child>
+          <object class="tk.Label" id="ab_conn_status_lbl">
+            <property name="text" translatable="yes">Not Connected!</property>
+            <property name="textvariable">string:ab_conn_status_lbl</property>
+            <layout manager="pack">
+              <property name="propagate">True</property>
+              <property name="side">top</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Labelframe" id="logs_frame">
+        <property name="height">200</property>
+        <property name="text" translatable="yes">Application Logs and Server responses</property>
+        <property name="width">500</property>
+        <layout manager="grid">
+          <property name="propagate">True</property>
+          <property name="row">13</property>
+          <property id="0" name="pad" type="col">0</property>
+        </layout>
+        <child>
+          <object class="tk.Text" id="application_logs_msg">
+            <property name="height">10</property>
+            <property name="text" translatable="yes">Logs from different Operations are shown here!</property>
+            <property name="width">50</property>
+            <layout manager="place">
+              <property name="anchor">nw</property>
+              <property name="relwidth">1</property>
+              <property name="x">0</property>
+              <property name="y">0</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="connect_aerobridge_btn">
+        <property name="command">on_connect_aerobridge_clicked</property>
+        <property name="text" translatable="yes">Connect to Aerobridge</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">1</property>
+          <property name="sticky">e</property>
+          <property id="1" name="pad" type="col">0</property>
+          <property id="1" name="pad" type="row">10</property>
+          <property id="4" name="pad" type="row">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Combobox" id="operations_details_combo">
+        <property name="width">40</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">4</property>
         </layout>
       </object>
     </child>
