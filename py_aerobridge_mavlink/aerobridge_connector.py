@@ -27,7 +27,6 @@ class AerobridgeClient():
         '''
         Declare your project id, token and the url (optional). 
         '''
-
         self.token = token
         self.securl = url if url else 'https://aerobridgetestflight.herokuapp.com/'
 
@@ -35,6 +34,14 @@ class AerobridgeClient():
     def ping_server(self):
         ''' This method Pings the Aerobridge Server for a response  '''
         securl = self.securl+ 'ping'
+        headers = {'Authorization': 'Bearer '+ self.token}
+        r = requests.get(securl, headers=headers)
+        return r
+
+
+    def get_operations(self):
+        ''' This method Pings the Aerobridge Server for a response  '''
+        securl = self.securl+ 'gcs/flight-operations'
         headers = {'Authorization': 'Bearer '+ self.token}
         r = requests.get(securl, headers=headers)
         return r
@@ -62,6 +69,7 @@ def mavlink_loop(conn, callbacks):
 
 class AerobridgeRFMApp:
     def __init__(self):
+        
         self.connecton_string = '/dev/ttyUSB0'
         self.connection_baud_rate = 921600
         self.builder = builder = pygubu.Builder()
@@ -114,13 +122,26 @@ class AerobridgeRFMApp:
         else:
             myAerobridgeClient = AerobridgeClient(url='https://aerobridgetestflight.herokuapp.com/', token=jwt)
             r = myAerobridgeClient.ping_server()
-            if r.status_code == 200:                
+            try:
+                assert r.status_code == 200
                 ab_conn_lbl.set('Connected and Verified Token!')
-            else:
+            except AssertionError as ae:
                 ab_conn_lbl.set('Invalid Token, contact your administrator')
-
-
-
+            else:
+                # Downloading Operations
+                ops = myAerobridgeClient.get_operations()
+                print (ops, ops.status_code)
+                if ops.status_code == 200: 
+                    all_operations = ops.json()
+                    print(all_operations)
+                    ops_combo_list = []
+                    all_operations_cb = self.builder.get_object('operations_details_combo')
+                    for operation in all_operations:
+                        ops_combo_list.append((operation['id'], operation['name']))
+                    
+                    all_operations_cb.configure(values=set(ops_combo_list))
+                    print(ops_combo_list)
+                        
 
 
     def connect_drone_btn_clicked(self):

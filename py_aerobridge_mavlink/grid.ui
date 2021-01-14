@@ -22,7 +22,7 @@
     <child>
       <object class="tk.Entry" id="jwt_text">
         <property name="text" translatable="yes">Paste Aerobridge JWT Token</property>
-        <property name="width">40</property>
+        <property name="width">30</property>
         <layout manager="grid">
           <property name="column">0</property>
           <property name="propagate">True</property>
@@ -65,7 +65,7 @@
     <child>
       <object class="ttk.Button" id="drone_id_pk_btn">
         <property name="command">drone_id_reg_post_btn_clicked</property>
-        <property name="text" translatable="yes">Post Drone ID and Public Key for Registration	</property>
+        <property name="text" translatable="yes">Post Drone ID and Public Key for Registration</property>
         <layout manager="grid">
           <property name="column">1</property>
           <property name="propagate">True</property>
@@ -159,7 +159,7 @@
     </child>
     <child>
       <object class="pygubu.builder.widgets.combobox" id="connection_string">
-        <property name="width">45</property>
+        <property name="width">35</property>
         <layout manager="grid">
           <property name="column">0</property>
           <property name="propagate">True</property>
@@ -268,7 +268,7 @@
       </object>
     </child>
     <child>
-      <object class="ttk.Combobox" id="operations_details_combo">
+      <object class="pygubu.builder.widgets.combobox" id="operations_details_combo">
         <property name="width">40</property>
         <layout manager="grid">
           <property name="column">1</property>
