@@ -1,6 +1,6 @@
 import os
 import pygubu
-from pymavlink import mavutil
+from pymavlink import mavtest, mavutil
 import threading
 import requests, json
 
@@ -47,7 +47,12 @@ class AerobridgeClient():
         return r
 
 
+def id_callback(value):
+    print("\nAutopilot Version as Dictionary: %s" % value.to_dict()")
 
+def heartbeat_callback(value):
+    print("Heartbeat from APM (system %u and status %u)" % (value.target_system, value.system_status))
+    print("\nAs dictionary: %s" % value.to_dict()")
 
 def mavlink_loop(conn, callbacks):
     '''a main routine for a thread; reads data from a mavlink connection,
@@ -57,8 +62,8 @@ def mavlink_loop(conn, callbacks):
     interesting_messages = list(callbacks.keys())
     while not mavlink_thread_should_exit:
         # send a heartbeat msg
-        conn.mav.heartbeat_send(mavutil.mavlink.MAV_TYPE_ONBOARD_CONTROLLER,
-                                mavutil.mavlink.MAV_AUTOPILOT_GENERIC,
+        conn.mav.heartbeat_send(mavutil.mavlink.MAV_TYPE_GCS,
+                                mavutil.mavlink.MAV_AUTOPILOT_INVALID,
                                 0,
                                 0,
                                 0)
@@ -91,7 +96,14 @@ class AerobridgeRFMApp:
 
 
     def get_drone_id_clicked(self):
-        pass
+        conn.mav.command_long_send(
+                connection.target_system,
+                connection.target_component,
+                mavutil.mavlink.MAV_CMD_REQUEST_MESSAGE,
+                0,
+                148, 0, 0, 0, 0, 0, 0
+            )
+            
 
     def drone_id_reg_post_btn_clicked(self):
         pass
@@ -130,34 +142,31 @@ class AerobridgeRFMApp:
             else:
                 # Downloading Operations
                 ops = myAerobridgeClient.get_operations()
-                print (ops, ops.status_code)
+                
                 if ops.status_code == 200: 
                     all_operations = ops.json()
-                    print(all_operations)
                     ops_combo_list = []
                     all_operations_cb = self.builder.get_object('operations_details_combo')
                     for operation in all_operations:
                         ops_combo_list.append((operation['id'], operation['name']))
                     
                     all_operations_cb.configure(values=set(ops_combo_list))
-                    print(ops_combo_list)
-                        
-
-
+                    
+                 
     def connect_drone_btn_clicked(self):
         # Source: https://github.com/thien94/vision_to_mavros/blob/master/scripts/t265_to_mavlink.py 
         progress("INFO: Starting Vehicle communications")
         conn = mavutil.mavlink_connection(
             self.connection_string,
             autoreconnect = True,
-            source_system = 1,
-            source_component = 93,
             baud=self.connection_baudrate,
-            force_connected=True,
+            wait_ready= True,
+            source_system = 255,
         )
-
+        conn.mav.
         mavlink_callbacks = {
-        #     'ATTITUDE': att_msg_callback,
+            'HEARTBEAT': heartbeat_callback,
+            'AUTOPILOT_VERSION': id_callback,
         }
 
         mavlink_thread = threading.Thread(target=mavlink_loop, args=(conn, mavlink_callbacks))
