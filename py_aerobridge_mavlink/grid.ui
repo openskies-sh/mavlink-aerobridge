@@ -174,7 +174,7 @@
     <child>
       <object class="ttk.Button" id="connect_drone_btn">
         <property name="command">connect_drone_btn_clicked</property>
-        <property name="text" translatable="yes">Connect to Drone!</property>
+        <property name="text" translatable="yes">2. Connect to Drone!</property>
         <layout manager="grid">
           <property name="column">0</property>
           <property name="propagate">True</property>
@@ -197,6 +197,7 @@
         <child>
           <object class="tk.Label" id="conn_status_lbl">
             <property name="text" translatable="yes">Not Connected!</property>
+            <property name="textvariable">string:drone_conn_status_lbl</property>
             <layout manager="pack">
               <property name="propagate">True</property>
               <property name="side">top</property>
@@ -239,8 +240,7 @@
         </layout>
         <child>
           <object class="tk.Text" id="application_logs_msg">
-            <property name="height">10</property>
-            <property name="text" translatable="yes">Logs from different Operations are shown here!</property>
+            <property name="height">10</property>            
             <property name="width">50</property>
             <layout manager="place">
               <property name="anchor">nw</property>
@@ -255,7 +255,7 @@
     <child>
       <object class="ttk.Button" id="connect_aerobridge_btn">
         <property name="command">on_connect_aerobridge_clicked</property>
-        <property name="text" translatable="yes">Connect to Aerobridge</property>
+        <property name="text" translatable="yes">1. Connect to Aerobridge</property>
         <layout manager="grid">
           <property name="column">0</property>
           <property name="propagate">True</property>

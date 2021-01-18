@@ -40,7 +40,7 @@ For technical developer only: You can choose to develop either the Plugin or Cli
 
 ### Python Client
 
-This client uses the [pygubu](https://github.com/alejandroautalan/pygubu) library to develop the user interface, you can use the grid.ui file to see the interface. The main code that interacts with MavLink is in the `aerobridge_connector.py` module. 
+This client uses the [pygubu](https://github.com/alejandroautalan/pygubu) library to develop the user interface, you can use the grid.ui file to see the interface. The main code that interacts with MavLink is in the `aerobridge_connector.py` module.
 
 ### Aerobridge Full Client
 
