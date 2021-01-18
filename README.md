@@ -32,7 +32,7 @@ Manufacturers / Operators: if you want to test / integrate this, join our "Canar
 
 ### Python Based Client
 
-![plugin](https://i.imgur.com/r4vNgdm.jpg)
+![plugin](https://i.imgur.com/8MfVv9P.jpg)
 
 ## Development
 
