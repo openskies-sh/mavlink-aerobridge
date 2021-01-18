@@ -16,8 +16,8 @@ Manufacturers / Operators: if you want to test / integrate this, join our "Canar
 ### Cross Platform Client
 
 1. Download and unzip the repository
-2. Go to the `py_aerobridge_mavlink` folder
-3. Install the dependencies by using pip e.g. `pip install -r requirements.txt`
+2. Go to the folder `cd py_aerobridge_mavlink`
+3. Install the dependencies by using pip e.g. `pip install -r requirements.txt`, this will install pymavlink and other libraries
 4. Launch the user interface `python aerobridge_connector.py`
 
 ### Windows Client
