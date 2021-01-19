@@ -7,7 +7,7 @@ This repository enables you to connect to a drone and thereby the Registered Fli
 
 both these solutions use the MAVLink Protocol as a the library to interact with RFM.
 
-__January 2021__ : This repository is under heavy development, and not for production use, this is why we are testing two ways of connectivity. The installation instructions and user interface **will** change. 
+__January 2021__ : This repository is under heavy development, and not for production use, this is why we are testing two ways of connectivity. The installation instructions and user interface **will** change.
 
 Manufacturers / Operators: if you want to test / integrate this, join our "Canary program" by registering for our [webinar series](http://webinar.aerobridge.in).
 
