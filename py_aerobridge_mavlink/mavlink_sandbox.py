@@ -2,16 +2,16 @@
 from __future__ import print_function
 
 from pymavlink import mavutil
-import mavtest
+
 
 from argparse import ArgumentParser
 parser = ArgumentParser(description=__doc__)
 
 parser.add_argument("--baudrate", type=int,
                   help="master port baud rate", default=115200)
-parser.add_argument("--device", default='com14',help="serial device")
+parser.add_argument("--device", default='tcp:127.0.0.1:5762',help="SITL")
 parser.add_argument("--source-system", dest='SOURCE_SYSTEM', type=int,
-                  default=255, help='MAVLink source system for this GCS')
+                  default=1, help='MAVLink source system for this GCS')
 args = parser.parse_args()
 
 def wait_heartbeat(m):
@@ -39,5 +39,6 @@ master = mavutil.mavlink_connection(args.device, baud=args.baudrate, source_syst
 # wait_heartbeat(master)
 
 ## Get the autopilot version
+# print(dir(master.mav))
 master.mav.autopilot_version_request_send(master.target_system, master.target_component)
 wait_id(master)
