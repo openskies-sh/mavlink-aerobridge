@@ -3,9 +3,11 @@ from __future__ import print_function
 
 from pymavlink import mavutil
 from time import sleep
-
+import os
 from argparse import ArgumentParser
 parser = ArgumentParser(description=__doc__)
+
+os.environ["MAVLINK20"] = "1"
 
 parser.add_argument("--baudrate", type=int,
                   help="master port baud rate", default=115200)
@@ -25,7 +27,7 @@ def wait_id(m):
     received_params =[]
     '''wait for a heartbeat so we know the target system IDs'''
     print("Waiting for DRONEID")
-    msg = m.recv_match(type=['STATUSTEXT'], blocking=True)
+    msg = m.recv_match(type=['AUTOPILOT_VERSION'], blocking=True)
     print("\nMessage Dictionary: %s" % msg.to_dict())
     return received_params
 
@@ -49,27 +51,25 @@ def get_all_params(mavconn):
     while mavconn.param_fetch_complete():
         msg = mavconn.recv_match(type='PARAM_VALUE', blocking=True,timeout=1)        
         received_params.append(msg)
-        
-        
-        
 
     return received_params
 # create a mavlink serial instance
 master = mavutil.mavlink_connection(args.device, baud=args.baudrate, source_system=args.SOURCE_SYSTEM)
-params = master.param_fetch_all()
+# params = master.param_fetch_all()
 
-wait_id(master)
+# wait_id(master)
 # params = get_all_params(master)
 # print(params)
 # for p in params:# don't print None params - ones we requested that didn't exist
 #     if not p:
 #         continue
 #     print(str(p.param_id),'\t', p.param_value )
-master.close()
+# master.close()
 # wait for the heartbeat msg to find the system ID
 # wait_heartbeat(master)
 
 ## Get the autopilot version
 # print(dir(master.mav))
-# master.mav.autopilot_version_request_send(master.target_system, master.target_component)
-# wait_id(master)
+master.mav.autopilot_version_request_send(master.target_system, master.target_component)
+wait_id(master)
+master.close()
