@@ -122,7 +122,7 @@ class AerobridgeRFMApp:
     def drone_id_reg_post_btn_clicked(self):
         pass
 
-    def generate_keys_btn_clicked(self):
+    def get_public_key_btn_clicked(self):
         pass
 
     def send_permission_button_clicked(self):

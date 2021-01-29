@@ -77,9 +77,9 @@
       </object>
     </child>
     <child>
-      <object class="ttk.Button" id="generate_keys_btn">
-        <property name="command">generate_keys_btn_clicked</property>
-        <property name="text" translatable="yes">Generate Keys</property>
+      <object class="ttk.Button" id="get_public_key_btn">
+        <property name="command">get_public_key_btn_clicked</property>
+        <property name="text" translatable="yes">Get Public Key</property>
         <layout manager="grid">
           <property name="column">0</property>
           <property name="propagate">True</property>
