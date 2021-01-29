@@ -20,4 +20,6 @@ args = parser.parse_args()
 
 master = mavutil.mavlink_connection(args.device, baud=args.baudrate, source_system=args.SOURCE_SYSTEM)
 
+## TODO: Actual code to get Public Key
 
+master.close()
