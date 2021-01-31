@@ -22,4 +22,6 @@ master = mavutil.mavlink_connection(args.device, baud=args.baudrate, source_syst
 
 ## TODO: Actual code to get Public Key
 
+print("Supports ftp for file transfers: %s" % master.capabilities.ftp)
+master.mav.file_transfer_protocol_send(0,master.target_system, master.target_component, payload)
 master.close()
