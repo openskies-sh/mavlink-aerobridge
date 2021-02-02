@@ -6,10 +6,6 @@ In this section, we will detail how to install and detail the steps to communica
 
 Follow the instructions [here](https://ardupilot.org/mavproxy/docs/getting_started/download_and_installation.html) to install Mavproxy for your machine and review some of the [startup options](https://ardupilot.org/mavproxy/docs/getting_started/starting.html)
 
-## Pre-requisite: Make sure you are using MAVLINK 2.0
-
-You can explicitly set it using the `--mavversion=2.0` command on [startup](https://ardupilot.org/mavproxy/docs/getting_started/starting.html#mavversion)
-
 ## Pre-requisite: Setting the appropriate connection string
 
 Follow instructions here to [start MAVProxy](https://ardupilot.org/mavproxy/docs/getting_started/quickstart.html) with your setup, note your connection string can accommodate both a live drone or a SITL
@@ -32,7 +28,7 @@ The `uid2` parameter is the necessary, you can copy that and then update that wi
 
 ## 2. Getting Public Key
 
-Getting the Public Key is done via FTP and a few other comments. You will need to install the appropriate firmware before
+Getting the Public Key is done via FTP and a few other comments. You will need to install the appropriate firmware before you can 
 
 ## 3. Upload permission artefact
 
