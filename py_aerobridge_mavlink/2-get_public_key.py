@@ -1,6 +1,6 @@
 
 from __future__ import print_function
-
+import os
 from pymavlink import mavutil
 from argparse import ArgumentParser
 parser = ArgumentParser(description=__doc__)
@@ -21,7 +21,8 @@ args = parser.parse_args()
 master = mavutil.mavlink_connection(args.device, baud=args.baudrate, source_system=args.SOURCE_SYSTEM)
 
 ## TODO: Actual code to get Public Key
-
-print("Supports ftp for file transfers: %s" % master.capabilities.ftp)
-master.mav.file_transfer_protocol_send(0,master.target_system, master.target_component, payload)
+with open('upload_tests/mavlink_upload.json', 'rb') as f:
+    payload = f.read()
+    # print("Supports ftp for file transfers: %s" % master.capabilities.ftp)
+    master.mav.file_transfer_protocol_send(0,master.target_system, master.target_component, payload)
 master.close()
