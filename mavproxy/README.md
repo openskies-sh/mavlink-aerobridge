@@ -28,7 +28,13 @@ The `uid2` parameter is the necessary, you can copy that and then update that wi
 
 ## 2. Getting Public Key
 
-Getting the Public Key is done via FTP and a few other comments. You will need to install the appropriate firmware before you can 
+Getting the Public Key is done via FTP and a few other comments. You will need to install the appropriate firmware before you can use this. Follow the following steps to test out FTP.
+```
+module load ftp
+ftp list
+ftp get logs/LASTLOG.txt
+ftp put LASTLOG.txt logs/NEWLOG.txt
+```
 
 ## 3. Upload permission artefact
 
