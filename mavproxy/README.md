@@ -53,19 +53,22 @@ TBC
 # Make a new folder for the project
 mkdir npnt_ardupilot; cd npnt_ardupilot
 
+# Create virtual environment
+python3 -m venv ./npnt_venv
+source npnt_venv/bin/activate
+pip3 install pycryptodome future pyserial
+
 git clone https://github.com/CubePilot/ardupilot.git --branch pr-digitalsky-india
 cd ardupilot
 git submodule update --init --recursive
+./Tools/environment_install/install-prereqs-ubuntu.sh -y
+. ~/.profile
 ```
 
 2. Generating the firmware and secure bootloader
 ```
 # Generate key
 openssl ecparam -out privatekey.pem -name secp256r1 -genkey
-# Create virtual environment
-python3 -m venv ./npnt_venv
-source npnt_venv/bin/activate
-pip3 install pycryptodome future pyserial
 
 # Generate a Secure Bootloader using following command:
 ./Tools/scripts/build_bootloaders.py CubeOrange --secure-key ../privatekey.pem --debug
