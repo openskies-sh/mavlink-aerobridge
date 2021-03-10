@@ -43,3 +43,67 @@ TBC
 ## 4. Getting Drone Logs
 
 TBC
+
+## 5. Testing signed Ardupilot firmware and secure bootloader
+
+`https://github.com/ArduPilot/ardupilot/pull/16738`
+
+1. Clone and initialize the ardupilot repository for pr-digitalsky-india
+```
+# Make a new folder for the project
+mkdir npnt_ardupilot; cd npnt_ardupilot
+
+# Create virtual environment
+python3 -m venv ./npnt_venv
+source npnt_venv/bin/activate
+pip3 install pycryptodome future pyserial
+
+git clone https://github.com/CubePilot/ardupilot.git --branch pr-digitalsky-india
+cd ardupilot
+git submodule update --init --recursive
+./Tools/environment_install/install-prereqs-ubuntu.sh -y
+. ~/.profile
+```
+
+2. Generating the firmware and secure bootloader
+```
+# Generate key
+openssl ecparam -out privatekey.pem -name secp256r1 -genkey
+
+# Generate a Secure Bootloader using following command:
+./Tools/scripts/build_bootloaders.py CubeOrange --secure-key ../privatekey.pem --debug
+
+# Generate a firmware file with following command
+./waf configure --board CubeOrange --secure-key ../privatekey.pem --ds-publickey modules/libnpnt/test/dgca_pubkey.der --debug
+
+# Upload to target
+./waf copter --upload
+```
+
+3. Setting pin and flashing secure bootloader using modified mavproxy and pymavlink
+
+```
+git clone https://github.com/CubePilot/MAVProxy.git --branch pr-securebootloader
+source npnt_env/bin/activate
+pip3 install -r requirements.txt
+
+# Uninstall any other mavproxy installations
+pip uninstall mavproxy
+
+# Then install the newly cloned mavproxy
+python setup.py install
+# Uninstall pymavlink already on system
+pip uninstall pymavlink
+# Install pymavlink from inside ardupilot
+cd /modules/mavlink/pymavlink
+python setup.py install
+
+# Launch mavproxy
+mavproxy.py --master=/dev/ttyACM0
+
+changepin 0 123456 # sets up pincode <1000 to 1000000>
+setpin 123456 # sets input pin, verified when using secure features like update bootloader
+flashsecurebootloader
+
+# Power cycle to start key generation and bootloader flash
+```
