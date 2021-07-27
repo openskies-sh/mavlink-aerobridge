@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.1">
+  <object class="ttk.Frame" id="mainwindow">
+    <property name="height">800</property>
+    <property name="padding">10</property>
+    <property name="width">600</property>
+    <layout manager="grid">
+      <property name="propagate">True</property>
+    </layout>
+    <child>
+      <object class="tk.Entry" id="jwt_text">
+        <property name="text" translatable="yes">Paste Aerobridge JWT Token</property>
+        <property name="width">50</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">1</property>
+          <property name="sticky">w</property>
+          <property id="1" name="pad" type="col">0</property>
+          <property id="1" name="pad" type="row">10</property>
+          <property id="4" name="pad" type="row">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Label" id="aerobridge_lbl">
+        <property name="justify">center</property>
+        <property name="text" translatable="yes">Aerobridge Commands
+</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">3</property>
+          <property name="sticky">e</property>
+          <property id="1" name="pad" type="col">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="get_signed_public_key_btn">
+        <property name="text" translatable="yes">Get Signed Public Key</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">6</property>
+          <property name="sticky">e</property>
+          <property id="1" name="pad" type="col">0</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="download_permission_artefact">
+        <property args="" cbtype="simple" name="command" type="command">download_permission_artefact_clicked</property>
+        <property name="text" translatable="yes">Download Permission Artefact</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">7</property>
+          <property name="sticky">e</property>
+          <property id="1" name="pad" type="col">0</property>
+          <property id="6" name="pad" type="row">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="upload_signed_log_btn">
+        <property args="" cbtype="simple" name="command" type="command">upload_signed_log_clicked</property>
+        <property name="text" translatable="yes">Upload Signed Log</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">8</property>
+          <property name="sticky">e</property>
+          <property id="1" name="pad" type="col">0</property>
+          <property id="7" name="pad" type="row">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Labelframe" id="ab_connection_status_lbl">
+        <property name="text" translatable="yes">Aerobridge Connection Status</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">13</property>
+          <property name="sticky">se</property>
+          <property id="1" name="pad" type="col">0</property>
+        </layout>
+        <child>
+          <object class="tk.Label" id="ab_conn_status_lbl">
+            <property name="text" translatable="yes">Not Connected!</property>
+            <property name="textvariable">string:ab_conn_status_lbl</property>
+            <layout manager="pack">
+              <property name="propagate">True</property>
+              <property name="side">top</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Labelframe" id="logs_frame">
+        <property name="height">200</property>
+        <property name="text" translatable="yes">Application Logs and Server responses</property>
+        <property name="width">500</property>
+        <layout manager="grid">
+          <property name="propagate">True</property>
+          <property name="row">13</property>
+          <property id="0" name="pad" type="col">0</property>
+        </layout>
+        <child>
+          <object class="tk.Text" id="application_logs_msg">
+            <property name="height">10</property>
+            <property name="width">50</property>
+            <layout manager="place">
+              <property name="anchor">nw</property>
+              <property name="relwidth">1</property>
+              <property name="x">0</property>
+              <property name="y">0</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="ttk.Button" id="connect_aerobridge_btn">
+        <property args="" cbtype="simple" name="command" type="command">on_connect_aerobridge_clicked</property>
+        <property name="text" translatable="yes">1. Connect to Aerobridge</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">1</property>
+          <property name="sticky">e</property>
+          <property id="1" name="pad" type="col">0</property>
+          <property id="1" name="pad" type="row">10</property>
+          <property id="4" name="pad" type="row">10</property>
+        </layout>
+      </object>
+    </child>
+    <child>
+      <object class="pygubu.builder.widgets.combobox" id="operations_details_combo">
+        <property name="width">40</property>
+        <layout manager="grid">
+          <property name="column">1</property>
+          <property name="propagate">True</property>
+          <property name="row">4</property>
+        </layout>
+      </object>
+    </child>
+  </object>
+</interface>
