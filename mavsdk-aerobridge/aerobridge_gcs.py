@@ -1,7 +1,6 @@
 
 import asyncio
 from mavsdk import System
-import time
 
 async def run():
     drone = System()
