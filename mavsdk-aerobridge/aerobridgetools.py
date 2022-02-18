@@ -14,7 +14,7 @@ class AerobridgeClient():
 		Declare your Aerobridge instance, token and the url (optional). 
 		'''		
 		self.token = token
-		self.aerobridge_url = aerobridge_url if aerobridge_url else 'https://aerobridgetestflight.herokuapp.com/api/v1/'		
+		self.aerobridge_url = aerobridge_url if aerobridge_url else 'https://aerobridgetestflight.herokuapp.com/'		
 		self.session = requests.Session()
 		self.authority_url = authority_url
 		
@@ -37,18 +37,23 @@ class AerobridgeClient():
 		''' This method downloads the flight plan in the form of a plan file given the flight plan id '''
 		raise NotImplementedError
 
-	def get_latest_firmware(self, firmware_id):
-		''' This method downloads the latest firmware  in the form of a plan file given the flight plan id '''
-		raise NotImplementedError
-
 	def get_all_aircrafts(self):
 		''' This method downloads all aircrafts in the management server '''
 		raise NotImplementedError
 
-	def get_aircraft_by_flight_controller_id(self, flight_controller_id):
+	def get_aircraft_by_flight_controller_id(self, registered_flight_module_id):
 		''' This method downloads all aircrafts in the management server '''
-		raise NotImplementedError
+		securl = self.aerobridge_url + 'registry/aircraft/rfm/' + registered_flight_module_id
+		headers = {'Authorization': 'Token '+ self.token, 'content-type': 'application/json'}
 		
-	def get_firmware_by_flight_controller_id(self, flight_controller_id):
+		r = self.session.get(securl, headers= headers)
+		return r
+		
+	def get_firmware_by_flight_controller_id(self, registered_flight_module_id):
 		''' This method downloads all aircrafts in the management server '''
-		raise NotImplementedError
+		
+		securl = self.aerobridge_url + 'registry/aircraft/firmware/' + registered_flight_module_id
+		headers = {'Authorization': 'Token '+ self.token, 'content-type': 'application/json'}
+		
+		r = self.session.get(securl, headers= headers)
+		return r
