@@ -1,5 +1,5 @@
-import requests, json
-from typing import UUID
+import requests
+from uuid import UUID
 # Version: 0.0.1
 
 class AuthorityCredentialsGetter():
@@ -17,7 +17,7 @@ class AuthorityCredentialsGetter():
 		''' 
 		Get client credentials 
 		'''
-		payload = {"grant_type":"client_credentials","client_id": self.client_id,"client_secret": self.client_secret,"audience": self.audience,"scope": 'aerobridge.read'}          
+		payload = {"grant_type":"client_credentials","client_id": self.client_id,"client_secret": self.client_secret,"audience": self.audience,"scope": 'aerobridge.read aerobridge.write'}          
 		url = self.token_url
 		
 		token_data = requests.post(url, data = payload)
@@ -52,27 +52,28 @@ class AerobridgeClient():
 	def ping_aerobridge(self):
 		''' This method pings and Aerobridge instance '''
 		aerobridge_url = self.aerobridge_url+ 'ping/'
-		headers = {'Authorization': 'Token '+ self.token}
+		headers = {'Authorization': 'Bearer '+ self.token}
 		r = self.session.get(aerobridge_url, headers=headers)
 		return r
         
 	def download_flight_permission(self, operation_id:UUID):
 		''' This method downloads flight permission object given a operation ''' 
 		securl = self.aerobridge_url + 'gcs/flight-operations/' + operation_id + '/permission'
-		headers = {'Authorization': 'Token '+ self.token, 'content-type': 'application/json'}
-		
+		headers = {'Authorization': 'Bearer '+ self.token}
 		r = self.session.put(securl, headers= headers)
 		return r
 
-
 	def download_flight_plan(self, plan_id):
 		''' This method downloads the flight plan in the form of a plan file given the flight plan id '''
-		raise NotImplementedError
+		securl = self.aerobridge_url + 'gcs/flight-plans/' + plan_id
+		headers = {'Authorization': 'Bearer '+ self.token, 'content-type': 'application/json'}
+		r = self.session.get(securl, headers= headers)
+		return r
 
 	def get_aircraft_by_flight_controller_id(self, registered_flight_module_id:str):
 		''' This method downloads all aircrafts in the management server '''
 		securl = self.aerobridge_url + 'registry/aircraft/rfm/' + registered_flight_module_id
-		headers = {'Authorization': 'Token '+ self.token, 'content-type': 'application/json'}
+		headers = {'Authorization': 'Bearer '+ self.token, 'content-type': 'application/json'}
 		
 		r = self.session.get(securl, headers= headers)
 		return r
@@ -81,7 +82,7 @@ class AerobridgeClient():
 		''' This method downloads all aircrafts in the management server '''
 		
 		securl = self.aerobridge_url + 'registry/aircraft/firmware/' + registered_flight_module_id
-		headers = {'Authorization': 'Token '+ self.token, 'content-type': 'application/json'}
+		headers = {'Authorization': 'Bearer '+ self.token, 'content-type': 'application/json'}
 		
 		r = self.session.get(securl, headers= headers)
 		return r
