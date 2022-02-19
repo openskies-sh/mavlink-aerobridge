@@ -2,13 +2,20 @@ import asyncio
 from mavsdk import System
 from mavsdk.info import InfoError
 import aerobridgetools
-import requests
+import json
 import logging
 import sys
 from data_definitions import FirmwareVersionAndHash, HardwareUID
 from os import environ as env
 from dotenv import load_dotenv, find_dotenv
 from dataclasses import asdict
+import jwt
+from cryptography.hazmat.primitives import serialization
+import argparse
+
+parser = argparse.ArgumentParser(description='Load mission into drone and arm')
+parser.add_argument("-o", "--operation_id", type=str, help ="Specify a Aerobridge Flight Operation ID")
+
 
 load_dotenv(find_dotenv())
  
@@ -28,23 +35,30 @@ logger.setLevel(logging.INFO)
 
 # This file checks the drone ID and firmware version against one stored in the management server and allows arming / disarming of the drone
 
+def generate_public_key_pem(jwks):
+    public_keys = {}
+    for jwk in jwks['keys']:
+        kid = jwk['kid']
+        public_keys[kid] = jwt.algorithms.RSAAlgorithm.from_jwk(json.dumps(jwk))
+    
+    public_key = public_keys.get(env.get('PASSPORT_PUBLIC_KEY_ID', None))
+    pem = public_key.public_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PublicFormat.SubjectPublicKeyInfo)       
+    
+    return pem
 
-class AuthorityCredentialsGetter():
-    ''' All calls to the Aerobridge requires credentials from a oauth server, in this case this is Flight Passport  '''
-    def __init__(self):
-        pass
-        
-    def get_credentials(self):  
-        payload = {"grant_type":"client_credentials","client_id": env.get('PASSPORT_CLIENT_ID'),"client_secret": env.get('PASSPORT_CLIENT_SECRET'),"audience": env.get('PASSPORT_AUDIENCE'),"scope": 'aerobridge.read'}          
-        url = env.get('PASSPORT_URL') + env.get('PASSPORT_TOKEN_URL')               
-       
-        token_data = requests.post(url, data = payload)
-        t_data = token_data.json()     
-        return t_data
+async def run(operation_id):    
+    my_authorization_helper = aerobridgetools.AuthorityCredentialsGetter(client_id = env.get('PASSPORT_CLIENT_ID', None), client_secret= env.get('PASSPORT_CLIENT_SECRET', None), audience = env.get('PASSPORT_AUDIENCE', None), base_url= env.get('PASSPORT_URL') ,token_endpoint = env.get('PASSPORT_TOKEN_ENDPOINT'), jwks_endpoint=env.get('PASSPORT_JWKS_ENDPOINT'))
+    logging.info("Getting token from Authority server")
+    auth_token = my_authorization_helper.get_credentials()        
+    logging.info("Getting public key from Authority server")
+    jwks = my_authorization_helper.get_public_key()    
+    # Convert public key to PEM and send to drone
+    
+    pem = generate_public_key_pem(jwks)
+    # print(operation_id)
 
-async def run():    
-    my_authorization_helper = AuthorityCredentialsGetter()
-    auth_token = my_authorization_helper.get_credentials()    
     
     vehicle = System()
     await vehicle.connect(system_address="udp://:14540")
@@ -82,9 +96,7 @@ async def run():
 
     # Aircraft is active, check firmware
     if aircraft_active_check:
-
-        aerobridge_firmware = my_aerobridge_client.get_firmware_by_flight_controller_id(registered_flight_module_id= hardware_uid)
-        
+        aerobridge_firmware = my_aerobridge_client.get_firmware_by_flight_controller_id(registered_flight_module_id= hardware_uid)        
         if aerobridge_firmware.status_code == 200:
             firmware_details = aerobridge_firmware.json()
             
@@ -97,12 +109,21 @@ async def run():
         else: 
             logger.error("Error in getting firmware version details from Aerobridge %s" % aerobridge_firmware)    
 
-        # Check RFM in Aerobridge
     else:
         logging.error("Aircraft is not active, it cannot be armed.")
         
-
-
+    if aircraft_active_check:    
+        # All checks passed, download flight operation permission and public key    
+        operation_permission = my_aerobridge_client.get_aircraft_by_flight_controller_id(operation_id=operation_id)
+        if operation_permission.status_code ==200:
+            logging.info("Successfully found permission with operation id %s in management server" % operation_id)
+            permission_data = operation_permission.json()
+            logging.info("Permission for flight successfully retrieved") 
+            if permission_data['status'] == "granted":
+                print("Permission Granted")
+            else:
+                print("Cannot arm drone, permission status %s" % permission_data['status'])
+            
 async def get_firmware_version(drone: System) -> FirmwareVersionAndHash:
     got_info = False 
     
@@ -146,11 +167,19 @@ async def get_flight_module_number(drone: System) -> HardwareUID:
     return hardware_uid 
 
 
-
-
 if __name__ == '__main__':
     # Start the main function
-    asyncio.ensure_future(run())
+    args = parser.parse_args()
+    operation_id = args.operation_id
+    if not operation_id:
+        print("A valid operation ID (UUID) from your Aerobridge instance must be provided before arming the drone" )
+        exit()
 
-    # Runs the event loop until the program is canceled with e.g. CTRL-C
-    asyncio.get_event_loop().run_forever()
+    loop = asyncio.get_event_loop()
+    asyncio.set_event_loop(loop)
+    tasks = asyncio.gather(run(operation_id))
+    try:
+        loop.run_until_complete(tasks)
+    except (Exception, KeyboardInterrupt) as e:
+        print('ERROR', str(e))
+        exit()
