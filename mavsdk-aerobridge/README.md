@@ -10,3 +10,4 @@ This directory has files to implement the Aerobridge guardian workflow for trust
 
 ## Install pre-requisites
 
+Use `pip install -r requirements.txt` to install all the pre-requisites. This library uses the MavSDK toolkit to communicate with the drone via Mavlink. It should work as expected with PX4 drones but ArduPilot will display warnings. 
