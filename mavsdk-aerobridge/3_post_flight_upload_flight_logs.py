@@ -10,7 +10,7 @@ from dotenv import load_dotenv, find_dotenv
 import tempfile
 import os
 
-parser = argparse.ArgumentParser(description='Load mission into drone and arm')
+parser = argparse.ArgumentParser(description='Once the mission is complete, check the logs and upload it to Aerobridge Management Server')
 parser.add_argument("-o", "--operation_id", type=str, help ="Specify a Aerobridge Flight Operation ID, e.g. try 3408bce9-dbab-4665-abfc-8ea03b0ad871")
 
 load_dotenv(find_dotenv())
