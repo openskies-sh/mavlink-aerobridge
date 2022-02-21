@@ -1,26 +1,33 @@
 # MAVlink Connectivity for Aerobridge Management Server
 
-This repository enables you to connect to a drone and thereby the Registered Flight Module (RFM) to the Aerobridge Management server. This repository proposes two ways to communicate with the RFM:
+This repository enables you to connect to a drone and thereby the Registered Flight Module (RFM) to the Aerobridge Management server. This repository proposes a number of ways to connect, all under development:
 
 - As a __Windows Client__ for installation in Windows Systems
 - As a __Cross-platform Client__ for use in Windows, OSX or Linux platforms
 
 both these solutions use the MAVLink Protocol as a the library to interact with RFM.
 
-__January 2021__ : This repository is under heavy development, and not for production use, this is why we are testing two ways of connectivity. The installation instructions and user interface **will** change.
+__February 2022__ : This repository is under heavy development, and not for production use, this is why we are testing two ways of connectivity. The installation instructions and user interface **will** change.
 
-Manufacturers / Operators: if you want to test / integrate this, join our "Canary program" by registering for our [webinar series](http://webinar.aerobridge.in).
+Manufacturers / Operators: if you want to test / integrate this, join our "Canary program" by registering for our [website](http://www.aerobridge.io).
 
 ## Installation
 
-### Cross Platform Client
+### ArduPilot via MavLink
 
 1. Download and unzip the repository
 2. Go to the folder `cd py_aerobridge_mavlink`
 3. Install the dependencies by using pip e.g. `pip install -r requirements.txt`, this will install pymavlink and other libraries
 4. Launch the user interface `python aerobridge_connector.py`
 
-### Windows Client
+### PX4 via MavLink
+
+1. Download and unzip the repository
+2. Go to the folder `cd mavsdk-aerobridge`
+3. Install the dependencies by using pip e.g. `pip install -r requirements.txt`, this will install mavsdk and other libraries
+4. Follow the Readme for instructions
+
+### ArduPilot Stack
 
 1. Go to the releases page and download the latest release
 
@@ -34,7 +41,7 @@ Manufacturers / Operators: if you want to test / integrate this, join our "Canar
 
 ![plugin](https://i.imgur.com/8MfVv9P.jpg)
 
-## Development
+## ArduPilot Development
 
 For technical developer only: You can choose to develop either the Plugin or Client. It is recommended that you have Mission Planner installed and the latest copy of the source downloaded per the instructions [here](https://ardupilot.org/dev/docs/building-mission-planner.html#getting-the-mission-planner-source-code-from-github-into-your-computer)
 
