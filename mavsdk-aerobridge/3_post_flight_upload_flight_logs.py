@@ -104,4 +104,18 @@ async def get_entries(drone):
 
 
 if __name__ == "__main__":
-    asyncio.get_event_loop().run_until_complete(run())
+    # Start the main function
+    args = parser.parse_args()
+    operation_id = args.operation_id
+    if not operation_id:
+        print("A valid Operation ID (UUID) from your Aerobridge instance must be provided before arming the drone with a mission, e.g. try -o 3408bce9-dbab-4665-abfc-8ea03b0ad871" )
+        exit()
+    
+    loop = asyncio.get_event_loop()
+    asyncio.set_event_loop(loop)
+    tasks = asyncio.gather(run(operation_id))
+    try:
+        loop.run_until_complete(tasks)
+    except (Exception, KeyboardInterrupt) as e:
+        print('ERROR', str(e))
+        exit()
