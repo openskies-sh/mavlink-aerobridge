@@ -188,7 +188,7 @@ async def run(operation_id):
     logging.info("Guardian directory successfully created!")
 
     # Create a temporary file to hold PEM
-    pem_file = tempfile.NamedTemporaryFile(delete = False)
+    pem_file = tempfile.NamedTemporaryFile(prefix='auth_server_public_key', suffix='.pem',delete = False)
 
     try:
         logging.debug("Writing PEM file data")
@@ -208,7 +208,7 @@ async def run(operation_id):
         logging.debug("PEM file succesfully deleted")
 
     # Create a file to hold permission OTP
-    auth_token_file = tempfile.NamedTemporaryFile(delete = False)
+    auth_token_file = tempfile.NamedTemporaryFile(prefix='guardian.jwt', suffix='.json', delete = False)
     try:
         with open(auth_token_file.name, 'w') as f:
             f.writelines(json.dumps(auth_token))
