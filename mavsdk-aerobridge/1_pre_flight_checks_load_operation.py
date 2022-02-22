@@ -44,14 +44,14 @@ def generate_public_key_pem(jwks):
     for jwk in jwks['keys']:
         kid = jwk['kid']
         public_keys[kid] = jwt.algorithms.RSAAlgorithm.from_jwk(json.dumps(jwk))
-
-    public_key = public_keys.get(env.get('PASSPORT_PUBLIC_KEY_ID', None))
+    passport_public_key_id = env.get('PASSPORT_PUBLIC_KEY_ID', None)
     try: 
-        assert public_key in public_keys.keys()
+        assert passport_public_key_id in public_keys
     except AssertionError as ae:
-        logging.error("Public key ID %s not found in the JWKS" % public_key)
+        logging.error("Public key ID %s not found in the JWKS" % passport_public_key_id)
         exit()
     else:
+        public_key = public_key[passport_public_key_id]
         pem = public_key.public_bytes(
                 encoding=serialization.Encoding.PEM,
                 format=serialization.PublicFormat.SubjectPublicKeyInfo)       
