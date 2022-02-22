@@ -39,16 +39,22 @@ logger.setLevel(logging.INFO)
 
 def generate_public_key_pem(jwks):
     # This method converts the JWKS JSON to return a dict of the key id and PEM formatted JSON.
-
+    pem = None
     public_keys = {}
     for jwk in jwks['keys']:
         kid = jwk['kid']
         public_keys[kid] = jwt.algorithms.RSAAlgorithm.from_jwk(json.dumps(jwk))
 
     public_key = public_keys.get(env.get('PASSPORT_PUBLIC_KEY_ID', None))
-    pem = public_key.public_bytes(
-            encoding=serialization.Encoding.PEM,
-            format=serialization.PublicFormat.SubjectPublicKeyInfo)       
+    try: 
+        assert public_key in public_keys.keys()
+    except AssertionError as ae:
+        logging.error("Public key ID %s not found in the JWKS" % public_key)
+        exit()
+    else:
+        pem = public_key.public_bytes(
+                encoding=serialization.Encoding.PEM,
+                format=serialization.PublicFormat.SubjectPublicKeyInfo)       
     return pem
 
 async def run(operation_id):    
