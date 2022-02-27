@@ -214,7 +214,7 @@ async def run(operation_id):
         logging.debug("PEM file succesfully deleted")
 
     # Create a file to hold permission OTP
-    auth_token_file = tempfile.NamedTemporaryFile(prefix='guardian.jwt', suffix='.json', delete = False)
+    auth_token_file = tempfile.NamedTemporaryFile(prefix='aerobridge_trusted_flight.jwt', suffix='.json', delete = False)
     try:
         with open(auth_token_file.name, 'w') as f:
             f.writelines(json.dumps(auth_token))
@@ -223,7 +223,7 @@ async def run(operation_id):
         exit()
     else:
         # send file to drone 
-        auth_token_upload = vehicle.ftp.upload(auth_token_file.name, guardian_directory)
+        auth_token_upload = vehicle.ftp.upload(auth_token_file.name, trusted_flight_directory)
     finally:
         auth_token_file.close()
         os.unlink(auth_token_file.name)
