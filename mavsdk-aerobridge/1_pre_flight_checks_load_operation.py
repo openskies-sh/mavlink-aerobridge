@@ -189,9 +189,9 @@ async def run(operation_id):
         print("Mission uploaded succesfully")
 
     # Write Token and Public Key
-    logging.info("Creating 'guardian' directory on the board..")
-    guardian_directory = await vehicle.ftp.create_directory("guardian")
-    logging.info("Guardian directory successfully created!")
+    logging.info("Creating 'trusted_flight' directory on the board..")
+    trusted_flight_directory = await vehicle.ftp.create_directory("trusted_flight")
+    logging.info("Trusted flight directory successfully created!")
 
     # Create a temporary file to hold PEM
     pem_file = tempfile.NamedTemporaryFile(prefix='auth_server_public_key', suffix='.pem',delete = False)
@@ -206,7 +206,7 @@ async def run(operation_id):
     else:
         # send file to drone         
         logging.info("Uploading public key to the drone")
-        pem_upload = vehicle.ftp.upload(pem_file.name, guardian_directory)
+        pem_upload = vehicle.ftp.upload(pem_file.name, trusted_flight_directory)
         logging.info("PEM File uploaded successfully")
     finally:
         pem_file.close()
