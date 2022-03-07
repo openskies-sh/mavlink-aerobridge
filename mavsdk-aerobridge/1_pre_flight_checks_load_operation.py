@@ -51,7 +51,7 @@ def generate_public_key_pem(jwks):
         logging.error("Public key ID %s not found in the JWKS" % passport_public_key_id)
         exit()
     else:
-        public_key = public_key[passport_public_key_id]
+        public_key = public_keys[passport_public_key_id]
         pem = public_key.public_bytes(
                 encoding=serialization.Encoding.PEM,
                 format=serialization.PublicFormat.SubjectPublicKeyInfo)       
