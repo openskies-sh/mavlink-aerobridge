@@ -136,6 +136,7 @@ async def run(operation_id):
         logging.error("Aircraft is not active, it cannot be armed.")        
         exit()
     permission_granted = False
+    geo_cage = {}
     plan_id = '0'
     if aircraft_active_check:    
         # All checks passed, download flight operation permission and public key in Aerobridge
@@ -157,6 +158,7 @@ async def run(operation_id):
     if permission_granted:
         # Flight permission has been granted download the mission plan 
         # All checks passed, download flight operation permission and public key    
+        geo_cage = permission_data['geo_cage']
         flight_plan_details = my_aerobridge_client.download_flight_plan(plan_id=plan_id)
         if flight_plan_details.status_code == 200:
             logging.info("Successfully found flight plan with id %s in management server" % plan_id)
@@ -219,7 +221,7 @@ async def run(operation_id):
         with open(auth_token_file.name, 'w') as f:
             f.writelines(json.dumps(auth_token))
     except Exception as e: 
-        logging.error("Error in writing file details")
+        logging.error("Error in writing auth token to file %s" %e)
         exit()
     else:
         # send file to drone 
@@ -228,8 +230,23 @@ async def run(operation_id):
         auth_token_file.close()
         os.unlink(auth_token_file.name)
 
+    # Send Geocage file 
+    geo_cage_file = tempfile.NamedTemporaryFile(prefix='geocage', suffix='.json', delete = False)
+    try:
+        with open(geo_cage_file.name, 'w') as f:
+            f.writelines(json.dumps(geo_cage))
+    except Exception as e: 
+        logging.error("Error in writing geocage file details")
+        exit()
+    else:
+        # send file to drone 
+        geo_cage_upload = vehicle.ftp.upload(geo_cage_file.name, trusted_flight_directory)
+    finally:
+        geo_cage_file.close()
+        os.unlink(geo_cage_file.name)
+
     # All checks done, drone ready to be armed. 
-    print("All checks passed, flight permission, public key and mission transferred to the drone.")
+    print("All checks passed, flight permission, public key, geo_cage and mission transferred to the drone.")
     
 
 async def get_firmware_version(drone: System) -> FirmwareVersionAndHash:
