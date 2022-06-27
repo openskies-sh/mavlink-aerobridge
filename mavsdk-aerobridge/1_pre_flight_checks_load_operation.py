@@ -1,6 +1,7 @@
 import asyncio
 from mavsdk import System
 from mavsdk.info import InfoError 
+from mavsdk.geofence import Point, Polygon
 import aerobridgetools
 import json
 import logging
@@ -189,6 +190,7 @@ async def run(operation_id):
         await vehicle.mission.set_return_to_launch_after_mission(True)
         logging.info("Mission File uploaded")
         print("Mission uploaded succesfully")
+   
 
     # Write Token and Public Key
     logging.info("Creating 'trusted_flight' directory on the board..")
@@ -229,6 +231,21 @@ async def run(operation_id):
     finally:
         auth_token_file.close()
         os.unlink(auth_token_file.name)
+
+    all_cage_points = []
+    for geo_cage_point in geo_cage:
+        p = Point(geo_cage_point.lat, geo_cage_point.lng)
+        all_cage_points.append(p)
+
+    # Create a polygon object using your points
+    geo_cage_polygon = Polygon(all_cage_points, Polygon.FenceType.INCLUSION)
+
+    # Upload the geofence to your vehicle
+    logging.info("Uploading geofence...")
+    geo_fence_upload =  vehicle.geofence.upload_geofence([geo_cage_polygon])
+
+    logging.info("Geofence uploaded!")
+
 
     # Send Geocage file 
     geo_cage_file = tempfile.NamedTemporaryFile(prefix='geocage', suffix='.json', delete = False)
