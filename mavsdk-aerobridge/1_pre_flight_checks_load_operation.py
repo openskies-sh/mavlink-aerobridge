@@ -79,7 +79,7 @@ async def run(operation_id):
     pem = generate_public_key_pem(jwks)
     logging.debug("JWKS to PEM conversion successful")    
     vehicle = System()
-    await vehicle.connect(system_address="udp://:14540")
+    await vehicle.connect(system_address=env.get('SYSTEM_ADDRESS', "udp://:14540"))
 
     async for state in vehicle.core.connection_state():
         if state.is_connected:
