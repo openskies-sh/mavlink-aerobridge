@@ -51,12 +51,10 @@ class PassportCredentialsGetter():
         return t_data
 
 class BlenderUploader():
-    
     def __init__(self, credentials):        
         self.credentials = credentials
+    def upload_to_blender(self, rid_json):
     
-    def upload_to_server(self, rid_json):
-        
         states = rid_json['current_states']
         
         rid_operator_details = RIDOperatorDetails(
