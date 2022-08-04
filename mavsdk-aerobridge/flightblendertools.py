@@ -1,3 +1,4 @@
+from lib2to3.pgen2 import token
 from os import environ as env
 
 from dotenv import load_dotenv, find_dotenv
@@ -6,7 +7,7 @@ import time
 import requests
 from dataclasses import dataclass, asdict
 from typing import Optional
-from datetime import datetime, timedelta
+import pathlib
 from os.path import exists
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -26,15 +27,24 @@ class PassportCredentialsGetter():
     def __init__(self):
         pass
 
+    def delete_cached_credentials(self):  
+        
+        token_exists = exists('token.json')
+        if token_exists:
+            token_file = pathlib.Path("token.json")
+            token_file.unlink()
+            
+            
     def get_cached_credentials(self):  
         token_exists = exists('token.json')
+        print(token_exists)
         if token_exists:
             with open('token.json', 'r') as token_file:
                 token_details = token_file.read()
-                token_details = json.loads(token_details)
-                credentials = token_details['credentials']
+            credentials = json.loads(token_details)         
+                       
         else:               
-            credentials = self.get_write_credentials()
+            credentials = self.get_write_credentials()            
             with open('token.json', 'w') as token_file:
                 token_file.write(json.dumps(credentials))
             
@@ -43,7 +53,7 @@ class PassportCredentialsGetter():
     def get_write_credentials(self):        
         payload = {"grant_type":"client_credentials","client_id": env.get('BLENDER_WRITE_CLIENT_ID'),"client_secret": env.get('BLENDER_WRITE_CLIENT_SECRET'),"audience": env.get('BLENDER_AUDIENCE'),"scope": env.get('BLENDER_WRITE_SCOPE')}        
         
-        url = env.get('PASSPORT_URL') + env.get('PASSPORT_TOKEN_URL')
+        url = env.get('PASSPORT_URL', None) + env.get('PASSPORT_TOKEN_ENDPOINT', None)
         
         token_data = requests.post(url, data = payload)
         t_data = token_data.json()
