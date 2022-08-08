@@ -49,18 +49,20 @@ async def run():
     my_blender_uploader = None
     my_credentials = flightblendertools.PassportCredentialsGetter()
     credentials = my_credentials.get_cached_credentials()
-    try:
-        
+    
+    try:        
         assert 'error' not in credentials
     except AssertionError as ke:
         my_credentials.delete_cached_credentials()
+        
         print("INFO: Error in getting UTM / Blender Credentials")
+        
     else:
         my_blender_uploader = flightblendertools.BlenderUploader(credentials=credentials)
     
     start_time = time.time()
     print_mission_progress_task = asyncio.ensure_future(print_mission_progress(drone))
-    position_task=  asyncio.ensure_future(get_position_x_seconds(3, get_drone_position,drone, start_time, my_blender_uploader ))    
+    position_task=  asyncio.ensure_future(get_position_x_seconds(3, get_drone_position,drone, start_time, my_blender_uploader))    
     running_tasks = [print_mission_progress_task, position_task]
     termination_task = asyncio.ensure_future(observe_is_in_air(drone, running_tasks))
     
@@ -82,20 +84,22 @@ async def get_position_x_seconds(timeout, get_drone_position, drone, start_time,
     while True:
         await asyncio.sleep(timeout)
         position = await get_drone_position(drone, start_time)   
-        # send position to Flight Blender
-     
-     
-        position = RIDAircraftPosition(
-                lat= position['lat'],
-                lng= position['lng'],
-                alt= position['altitude'],
+    
+        p = RIDAircraftPosition(
+                lat= position.latitude_deg,
+                lng= position.longitude_deg,
+                alt= position.relative_altitude_m,
+                pressure_altitude=0.0,
                 accuracy_h= "HAUnkown",
                 accuracy_v= "VAUnknown",
                 extrapolated= False)
-        rid_json = RIDAircraftState(timestamp=arrow.now().isoformat(),operational_status="Airborne", position = position, height=RIDHeight(distance = 50.0, reference = "TakeoffLocation"), track=181.69, speed= 4.91, timestamp_accuracy=0.0, speed_accuracy="SA3mps", vertical_speed=0.0)
+                
+        rid_json = RIDAircraftState(timestamp=arrow.now().isoformat(),operational_status="Airborne", position = p, height=RIDHeight(distance = 50.0, reference = "TakeoffLocation"), track=181.69, speed= 4.91, timestamp_accuracy=0.0, speed_accuracy="SA3mps", vertical_speed=0.0)
+        
         if my_blender_uploader is not None:
-            my_blender_uploader.upload_to_blender(rid_json = json.dumps(asdict(rid_json)))
-        print(position)
+            print("Submitting telemetry to Flight Blender..")            
+            my_blender_uploader.upload_to_blender(rid_json ={'states': [json.loads(json.dumps(asdict(rid_json)))]})
+            
 
 async def observe_is_in_air(drone, running_tasks):
     """ Monitors whether the drone is flying or not and
@@ -111,6 +115,7 @@ async def observe_is_in_air(drone, running_tasks):
                     await task
                 except asyncio.CancelledError:
                     pass
+            print("Shutting down script..")
             await asyncio.get_event_loop().shutdown_asyncgens()
             return
 
