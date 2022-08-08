@@ -80,7 +80,7 @@ class BlenderUploader():
             
             payload = {"observations":[{"current_states":[state], "flight_details": asdict(rid_operator_details) }]}
             
-            securl = env.get('BLENDER_RID_FQDN', 'http://localhost:8000/rid/flight_data') # set this to self (Post the json to itself)
+            securl = env.get('BLENDER_RID_FQDN', 'http://localhost:8000/set_telemetry_data') # set this to self (Post the json to itself)
             try:
                 response = requests.put(securl, json = payload, headers = headers)
                 
