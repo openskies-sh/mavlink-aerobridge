@@ -4,7 +4,7 @@ import flightblendertools
 from dataclasses import dataclass, asdict
 from typing import Optional
 import arrow, json
-import sys
+
 @dataclass
 class RIDAircraftPosition:
   lat: float
@@ -19,7 +19,6 @@ class RIDAircraftPosition:
 class RIDHeight:
   distance: float
   reference: str
-
 
 @dataclass
 class RIDAircraftState:
