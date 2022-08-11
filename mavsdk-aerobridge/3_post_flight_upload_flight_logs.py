@@ -35,7 +35,7 @@ logger.setLevel(logging.INFO)
 async def run(operation_id):    
     # This is the main function to upload flight logs from the drone
 
-    my_authorization_helper = aerobridgetools.AuthorityCredentialsGetter(client_id = env.get('PASSPORT_CLIENT_ID', None), client_secret= env.get('PASSPORT_CLIENT_SECRET', None), audience = env.get('PASSPORT_AUDIENCE', None), base_url= env.get('PASSPORT_URL') ,token_endpoint = env.get('PASSPORT_TOKEN_ENDPOINT'), jwks_endpoint=env.get('PASSPORT_JWKS_ENDPOINT'))
+    my_authorization_helper = aerobridgetools.AuthorityCredentialsGetter(client_id = env.get('AEROBRIDGE_CLIENT_ID', None), client_secret= env.get('AEROBRIDGE_CLIENT_SECRET', None), audience = env.get('AEROBRIDGE_AUDIENCE', None), base_url= env.get('PASSPORT_URL') ,token_endpoint = env.get('PASSPORT_TOKEN_ENDPOINT'), jwks_endpoint=env.get('PASSPORT_JWKS_ENDPOINT'))
 
     logging.info("Getting token from Authority server")
 
