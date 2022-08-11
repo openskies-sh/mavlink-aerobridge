@@ -9,7 +9,7 @@ from os import environ as env
 from dotenv import load_dotenv, find_dotenv
 import tempfile
 import os
-
+from os import environ as env
 parser = argparse.ArgumentParser(description='Once the mission is complete, check the logs and upload it to Aerobridge Management Server')
 parser.add_argument("-o", "--operation_id", type=str, help ="Specify a Aerobridge Flight Operation ID, e.g. try 3408bce9-dbab-4665-abfc-8ea03b0ad871")
 
@@ -52,7 +52,7 @@ async def run(operation_id):
     logging.info("Getting public key from Authority server")
 
     drone = System()
-    await drone.connect(system_address="udp://:14540")
+    await drone.connect(system_address=env.get('SYSTEM_ADDRESS', "udp://:14540"))
 
     print("Waiting for drone to connect...")
     async for state in drone.core.connection_state():

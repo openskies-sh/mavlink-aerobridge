@@ -4,6 +4,7 @@ import flightblendertools
 from dataclasses import dataclass, asdict
 from typing import Optional
 import arrow, json
+from os import environ as env
 
 @dataclass
 class RIDAircraftPosition:
@@ -39,7 +40,7 @@ class RIDAircraftState:
 
 async def run():
     drone = System()
-    await drone.connect(system_address="udp://:14540")
+    await drone.connect(system_address=env.get('SYSTEM_ADDRESS', "udp://:14540"))
     print("Waiting for drone to connect...")
     async for state in drone.core.connection_state():
         if state.is_connected:
