@@ -78,6 +78,8 @@ async def run(operation_id):
     logging.debug("Converting JWKS to PEM format")
     pem = generate_public_key_pem(jwks)
     logging.debug("JWKS to PEM conversion successful")    
+
+    # Connect to the vehicle
     vehicle = System()
     await vehicle.connect(system_address=env.get('SYSTEM_ADDRESS', "udp://:14540"))
 
@@ -85,6 +87,13 @@ async def run(operation_id):
         if state.is_connected:
             print(f"Vehicle discovered")
             break
+    
+    ## Get the Auth Server related data: Public Key of the Auth server and Full Chain PEM details of the Auth server
+
+    # Created Trusted Flight Directory on the vehicle
+    logging.info("Creating 'trusted_flight' directory on the board..")
+    trusted_flight_directory = await vehicle.ftp.create_directory("trusted_flight")
+    logging.info("Trusted flight directory successfully created!")
 
     firmware_version_hash = await get_firmware_version(vehicle)  
     # print("Found firmware version %s " %firmware_version_hash)
@@ -192,11 +201,6 @@ async def run(operation_id):
         print("Mission uploaded succesfully")
    
 
-    # Write Token and Public Key
-    logging.info("Creating 'trusted_flight' directory on the board..")
-    trusted_flight_directory = await vehicle.ftp.create_directory("trusted_flight")
-    logging.info("Trusted flight directory successfully created!")
-
     # Create a temporary file to hold PEM
     pem_file = tempfile.NamedTemporaryFile(prefix='auth_server_public_key', suffix='.pem',delete = False)
 
@@ -216,6 +220,41 @@ async def run(operation_id):
         pem_file.close()
         os.unlink(pem_file.name)
         logging.debug("PEM file succesfully deleted")
+
+    # Download the Server Full Chain PEM
+    auth_server_full_chain_query = my_aerobridge_client.get_auth_server_fullchain_url()
+    if auth_server_full_chain_query.status_code ==200: 
+        # For more information see: https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/openskies-sh/aerobridge/master/api/aerobridge-1.0.0.resolved.yaml#tag/Credentials/operation/listAuthServerFullChain
+        auth_server_full_chain_url = auth_server_full_chain_query['binary_file_url']
+    else:
+        print("Auth server full chain PEM could not be downloaded")
+        exit()
+
+
+
+    # Create a file to hold permission the auth server full chain
+    full_chain_file = tempfile.NamedTemporaryFile(prefix='fullchain', suffix='.pem' delete = False)
+    full_chain_download_query = requests.get(auth_server_full_chain_url, stream=True)
+
+    if full_chain_download_query.status_code == 200: 
+        try:
+            with open(full_chain_file.name, 'wb') as f:
+                for chunk in full_chain_download_query.iter_content(chunk_size=1024): 
+                    if chunk: 
+                        f.write(chunk)
+
+        except Exception as e: 
+            logging.error("Error in writing full chain data to file %s" %e)
+            exit()
+        else:
+            # send file to drone 
+            full_chain_upload = vehicle.ftp.upload(full_chain_file.name, trusted_flight_directory)
+        finally:
+            full_chain_file.close()
+            os.unlink(full_chain_file.name)
+    else:
+        logging.error("Error in writing full chain data to file %s" %e)
+        exit()
 
     # Create a file to hold permission OTP
     auth_token_file = tempfile.NamedTemporaryFile(prefix='aerobridge_trusted_flight.jwt', suffix='.json', delete = False)

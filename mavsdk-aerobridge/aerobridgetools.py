@@ -79,7 +79,7 @@ class AuthorityCredentialsGetter():
 
         Returns
         -------
-        JSON in the JWKS forma
+        JSON in the JWKS format
 		"""
 		url = self.jwks_url		
 		jwks_data = requests.get(url)
@@ -104,7 +104,7 @@ class AerobridgeClient():
 	"""
 
 
-	def __init__(self, aerobridge_url:str, token:str):
+	def __init__(self, aerobridge_url:str, token:str= None):
 		"""
         Constructs all the necessary attributes for the aerobridge object.
 
@@ -128,8 +128,27 @@ class AerobridgeClient():
 		'''
 
 		aerobridge_url = self.aerobridge_url+ 'ping/'
-		headers = {'Authorization': 'Bearer '+ self.token}
+		if self.token:
+			headers = {'Authorization': 'Bearer '+ self.token}
+		else:
+			headers = {}
 		r = self.session.get(aerobridge_url, headers=headers)
+		return r
+        
+	def get_auth_server_fullchain_url(self):
+		'''
+		This method 
+
+            Returns:
+                     full_chain_url_details (json): A link with the full chain PEM file of the domain of the auth server that issues the permission tokens for more information see: https://redocly.github.io/redoc/?url=https://raw.githubusercontent.com/openskies-sh/aerobridge/master/api/aerobridge-1.0.0.resolved.yaml#tag/Credentials/operation/listAuthServerFullChain
+		'''
+
+		auth_server_fullchain_url = self.aerobridge_url+ 'pki/auth_server_fullchain/'
+		if self.token:
+			headers = {'Authorization': 'Bearer '+ self.token}
+		else:
+			headers = {}
+		r = self.session.get(auth_server_fullchain_url, headers=headers)
 		return r
         
 	def download_flight_permission(self, operation_id:UUID):
@@ -144,7 +163,10 @@ class AerobridgeClient():
 		'''
 
 		securl = self.aerobridge_url + 'gcs/flight-operations/' + operation_id + '/permission'
-		headers = {'Authorization': 'Bearer '+ self.token}
+		if self.token:
+			headers = {'Authorization': 'Bearer '+ self.token}
+		else:
+			headers = {}
 		r = self.session.put(securl, headers= headers)
 		return r
 
@@ -161,7 +183,10 @@ class AerobridgeClient():
 		'''
 
 		securl = self.aerobridge_url + 'gcs/flight-logs'
-		headers = {'Authorization': 'Bearer '+ self.token}
+		if self.token:
+			headers = {'Authorization': 'Bearer '+ self.token}
+		else:
+			headers = {}
 		payload = {'operation':operation_id, 'raw_log':raw_log}
 		r = self.session.post(securl, headers= headers,json = payload)
 		return r
@@ -194,7 +219,11 @@ class AerobridgeClient():
 		'''
 		
 		securl = self.aerobridge_url + 'registry/aircraft/rfm/' + registered_flight_module_id
-		headers = {'Authorization': 'Bearer '+ self.token, 'content-type': 'application/json'}
+		if self.token:
+			headers = {'Authorization': 'Bearer '+ self.token , 'content-type': 'application/json'}
+		else:
+			headers = {}
+
 		
 		r = self.session.get(securl, headers= headers)
 		return r
@@ -212,7 +241,10 @@ class AerobridgeClient():
 		
 		
 		securl = self.aerobridge_url + 'registry/aircraft/firmware/' + registered_flight_module_id
-		headers = {'Authorization': 'Bearer '+ self.token, 'content-type': 'application/json'}
+		if self.token:
+			headers = {'Authorization': 'Bearer '+ self.token , 'content-type': 'application/json'}
+		else:
+			headers = {}
 		
 		r = self.session.get(securl, headers= headers)
 		return r
