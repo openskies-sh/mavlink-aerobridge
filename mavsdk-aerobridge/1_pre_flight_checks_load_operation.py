@@ -15,6 +15,7 @@ from cryptography.hazmat.primitives import serialization
 import argparse
 import tempfile
 import os
+import requests
 
 parser = argparse.ArgumentParser(description='Load mission into drone and arm')
 parser.add_argument("-o", "--operation_id", type=str, help ="Specify a Aerobridge Flight Operation ID, e.g. try 3408bce9-dbab-4665-abfc-8ea03b0ad871")
@@ -233,7 +234,7 @@ async def run(operation_id):
 
 
     # Create a file to hold permission the auth server full chain
-    full_chain_file = tempfile.NamedTemporaryFile(prefix='fullchain', suffix='.pem' delete = False)
+    full_chain_file = tempfile.NamedTemporaryFile(prefix='fullchain', suffix='.pem', delete = False)
     full_chain_download_query = requests.get(auth_server_full_chain_url, stream=True)
 
     if full_chain_download_query.status_code == 200: 
