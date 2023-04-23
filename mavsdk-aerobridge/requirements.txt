@@ -1,6 +1,6 @@
-mavsdk==1.4.4
+mavsdk==0.22.3
 requests==2.28.2
 python-dotenv==1.0.0
 pyjwt==2.6.0
-cryptography==39.0.2
+cryptography==40.0.2
 arrow==1.2.3
